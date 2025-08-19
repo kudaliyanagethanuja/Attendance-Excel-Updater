@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://flask.palletsprojects.com/">
-    <img width="250px" src=".github/images/logo.png"><br/>
+    <img width="250px" src=".github/images/logos.png"><br/>
   </a>
   <h1 align="center">Flask Attendance Excel Updater</h1>
 </p>
