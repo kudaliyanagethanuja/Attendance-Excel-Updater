@@ -100,5 +100,16 @@ This interface ensures that users can upload, process, and download cleaned atte
 - Formats check-in/check-out times.
 - Downloads a new file: updated_<yourfile>.xlsx.
 
+## ✅ Checking
+
+You can also reference the git repo directly if you want:
+
+```yaml
+Link: https://thanujasath.pythonanywhere.com/
+Username: admin
+Password: 
+   
+```
+
 
 
