@@ -46,7 +46,6 @@ It’s built with **Flask**, **Pandas**, and **OpenPyXL**.
 
 ## 📸 Screenshots
 
-> Add these images to
 >`📌 Problem Overview
 
 Many organizations track attendance using Excel sheets, but the raw data often has issues like: 
@@ -61,8 +60,41 @@ This leads to inaccurate reports, wasted time, and difficulty calculating attend
 ![Input Excel](.github/images/excel_input.png)  
 *Original Excel file with missing dates / times*
 
+>`📌 Solution Overview
+
+This Flask project solves the problem by:
+
+- Filling all missing dates for the month automatically.
+- Correcting the Day column to match the actual date.
+- Standardizing time values to HH:MM AM/PM.
+- Preserving any existing check-in/check-out data.
+
+Processing multiple sheets in one workbook and producing a clean, downloadable Excel file.
+
 ![Output Excel](.github/images/excel_output.png)  
 *Processed Excel with filled dates and formatted times*
+
+>`📌 Web UI Overview
+
+The Flask Attendance File Processor & Converter web interface is designed for simplicity and clarity:
+
+- Clean and modern design with a dark theme for better readability.
+- Upload section: Users can easily drag & drop or click to select their .xlsx attendance files.
+- Upload & Process button: Starts the automatic validation and processing of the Excel file.
+- Security notice: Highlights that files are encrypted in transit and limited to 20MB.
+- Information hints: Explains processing speed and possible delays for large files.
+- Feature highlights: Quick visual cues about the app’s advantages:
+
+- ⚡ Fast – Optimized parser for large sheets.
+
+- ✅ Reliable – Automatic validation and rollback on failure.
+
+- 📝 Audited – Tracks all changes with user, time, and brief summary.
+
+Screenshot:
+
+This interface ensures that users can upload, process, and download cleaned attendance files quickly and securely, even without technical knowledge.
+
 
 ![Web UI](.github/images/app_ui.png)  
 *Upload page*
