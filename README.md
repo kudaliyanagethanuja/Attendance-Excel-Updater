@@ -59,5 +59,13 @@ It’s built with **Flask**, **Pandas**, and **OpenPyXL**.
 
 ---
 
-## 📂 Project Structure
+## 📝 How it works
+
+Upload your Excel workbook (.xlsx).
+The app parses all sheets and builds a complete date range.
+Fills in missing dates for the month.
+Formats check-in/check-out times.
+Downloads a new file: updated_<yourfile>.xlsx.
+
+
 
