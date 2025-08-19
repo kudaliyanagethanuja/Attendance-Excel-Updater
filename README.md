@@ -19,7 +19,7 @@
 
 ---
 
-[[Changelog]](./CHANGELOG.md) • [[Issues]](https://github.com/your-username/attendance-excel-updater/issues) • [[Flask]](https://flask.palletsprojects.com/en/stable/)
+[[Changelog]](./CHANGELOG.md) • [[Flask]](https://flask.palletsprojects.com/en/stable/) • [[Pandas]](https://pandas.pydata.org/docs/)  • [[openpyxl]](https://openpyxl.readthedocs.io/en/stable/)  
 
 ---
 
