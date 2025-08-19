@@ -102,7 +102,7 @@ This interface ensures that users can upload, process, and download cleaned atte
 
 ## ✅ Checking
 
-You can also reference the git repo directly if you want:
+Here are the credentials to access the application:
 
 ```yaml
 Link: https://thanujasath.pythonanywhere.com/
