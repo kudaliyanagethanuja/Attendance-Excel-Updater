@@ -110,6 +110,8 @@ Username: admin
 Password: 
    
 ```
+Contributing
+- If you found any bugs, potential improvements, or even new features, feel free to do the changes and make a Pull Request.
 
 
 
