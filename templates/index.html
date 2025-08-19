@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Attendance File Processor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind CDN config: custom colors + animations
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eefcf7',
+              100: '#d6f7ea',
+              200: '#a9efd5',
+              300: '#76e6bf',
+              400: '#3cdca6',
+              500: '#18c38d',
+              600: '#0da175',
+              700: '#0b7e5d',
+              800: '#0c624b',
+              900: '#0b523e'
+            }
+          },
+          keyframes: {
+            shimmer: {
+              '0%': { backgroundPosition: '0% 50%' },
+              '100%': { backgroundPosition: '100% 50%' }
+            },
+            glow: {
+              '0%, 100%': { boxShadow: '0 0 0px rgba(24,195,141,0.0), 0 0 0px rgba(24,195,141,0.0)' },
+              '50%': { boxShadow: '0 0 30px rgba(24,195,141,0.35), 0 0 60px rgba(24,195,141,0.15)' }
+            },
+            floaty: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' }
+            },
+            gridmove: {
+              '0%': { backgroundPosition: '0px 0px' },
+              '100%': { backgroundPosition: '40px 40px' }
+            }
+          },
+          animation: {
+            shimmer: 'shimmer 3s linear infinite',
+            glow: 'glow 3s ease-in-out infinite',
+            floaty: 'floaty 6s ease-in-out infinite',
+            gridmove: 'gridmove 12s linear infinite'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    html {
+  scroll-behavior: smooth;
+}
+
+    /* Background grid + vignette */
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: -1;
+      background: radial-gradient(60vw 60vw at 20% 10%, rgba(24,195,141,.12), transparent 60%),
+                  radial-gradient(40vw 40vw at 80% 80%, rgba(59,130,246,.12), transparent 60%);
+      filter: blur(20px);
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: -2;
+      background-image: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75));
+    }
+     /* Typewriter effect */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blinkCaret {
+      50% { border-color: transparent; }
+    }
+
+    .typewriter {
+      overflow: hidden; /* Ensures the text doesn't overflow */
+      white-space: nowrap;
+      border-right: 2px solid #f87171; /* Tailwind red-500 */
+      width: 0;
+      animation: typing 2s steps(18, end) forwards, blinkCaret 0.75s step-end infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-neutral-950 text-neutral-100 selection:bg-brand-500/30 selection:text-white">
+  <!-- Top bar -->
+  <header class="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-neutral-900/50 border-b border-white/10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 grid place-items-center rounded-xl bg-gradient-to-tr from-brand-500 to-sky-500 text-white shadow-lg shadow-brand-500/20 animate-glow">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <div>
+          <h1 class="text-lg sm:text-xl font-semibold tracking-tight">Attendance File Processor & Converter</h1>
+           <p class="text-sm text-neutral-400">Powered by the pandas library</p>
+        </div>
+      </div>
+
+      <a href="/logout" class="inline-flex items-center gap-2 text-sm font-medium rounded-xl border border-white/10 px-3 py-2 hover:border-white/20 hover:bg-white/5 transition focus:outline-none focus:ring-2 focus:ring-brand-500/50">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </a>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Hero / intro card -->
+    <section class="relative overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/40 shadow-xl">
+      <div class="absolute inset-0 opacity-[0.07] bg-[linear-gradient(90deg,transparent_0,_transparent_37px,_rgba(255,255,255,0.08)_38px),linear-gradient(transparent_0,_transparent_37px,_rgba(255,255,255,0.08)_38px)] bg-[length:40px_40px] animate-gridmove"></div>
+      <div class="relative p-6 sm:p-10">
+        <div class="flex flex-col md:flex-row md:items-center gap-6">
+          <div class="flex-1">
+            <h2 class="text-2xl sm:text-3xl font-semibold">
+              <span class="bg-gradient-to-r from-brand-400 via-emerald-300 to-sky-300 bg-[length:200%_auto] bg-clip-text text-transparent animate-shimmer">Upload Attendance Excel (.xlsx)</span>
+            </h2>
+            <p class="mt-2 text-neutral-300/80 max-w-prose">Securely upload your attendance sheet—automatically validate, process, and update records with full audit logs, No macros needed.</p>
+          </div>
+          <div class="w-full md:w-auto">
+            <div class="rounded-xl border border-brand-500/30 bg-gradient-to-tr from-brand-500/10 to-sky-500/10 px-4 py-3 text-brand-200 text-sm">
+              <i class="fa-solid fa-shield-halved mr-2"></i>Encrypted in transit · Max 20MB
+            </div>
+          </div>
+        </div>
+
+        <!-- Flash messages (Flask) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% if category == 'error' %}
+              <div id="errorMessage" class="mt-6 rounded-xl border border-red-500/30 bg-red-500/10 text-red-200 px-4 py-3 text-sm shadow-lg shadow-red-500/10 transition-opacity">
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-circle-exclamation"></i>
+                  <p class="leading-relaxed">{{ message }}</p>
+                </div>
+              </div>
+              <script>
+                setTimeout(() => {
+                  const errDiv = document.getElementById('errorMessage');
+                  if (errDiv) {
+                    errDiv.classList.add('opacity-0');
+                    setTimeout(() => errDiv.style.display = 'none', 600);
+                  }
+                }, 3000);
+              </script>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <!-- Upload form card -->
+        <form id="uploadForm" action="/" method="post" enctype="multipart/form-data" class="mt-8">
+          <div class="grid gap-6 md:grid-cols-5">
+            <!-- Drag & drop file area -->
+            <label class="md:col-span-3 group relative flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-white/[.03] p-8 text-center transition hover:border-brand-400/40 hover:bg-white/[.05] cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500/50">
+              <input id="fileInput" type="file" name="file" accept=".xlsx" required class="sr-only" />
+              <div class="pointer-events-none">
+                <div class="mx-auto h-14 w-14 rounded-xl bg-neutral-900/60 grid place-items-center border border-white/10 shadow-inner shadow-black/60 group-hover:scale-105 transition-transform">
+                  <i class="fa-regular fa-file-excel text-2xl text-emerald-300"></i>
+                </div>
+                <p class="mt-3 font-medium">Click here to upload a document</p>
+                <p class="text-xs text-neutral-400">please upload here to · .xlsx only</p>
+                <p id="fileName" class="mt-2 text-xs text-emerald-300 hidden"></p>
+              </div>
+              <span class="absolute inset-x-10 -bottom-[1px] h-px bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent"></span>
+            </label>
+
+            <!-- Actions -->
+            <div class="md:col-span-2 flex flex-col gap-4">
+              <button type="submit" id="submitBtn" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-brand-500 to-sky-600 px-5 py-3 font-semibold text-white shadow-lg shadow-brand-500/20 ring-1 ring-inset ring-white/10 transition transform hover:translate-y-[-1px] hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40">
+                <span class="relative">
+                  <span class="pointer-events-none inline-block"><i class="fa-solid fa-rocket-launch mr-2"></i>Upload & Process</span>
+                </span>
+              </button>
+
+              <div class="text-xs text-neutral-400">
+  <i class="fa-solid fa-circle-info mr-1"></i>
+  Please note: Large files may take some
+  <span class="text-red-500 font-bold animate-pulse-bright">Time To Download</span>.
+</div>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Extend Tailwind with a custom pulse-bright animation
+  tailwind.config = {
+    theme: {
+      extend: {
+        keyframes: {
+          'pulse-bright': {
+            '0%, 100%': { opacity: '0.4', textShadow: '0 0 5px #f87171' },
+            '50%': { opacity: '1', textShadow: '0 0 15px #f87171' },
+          },
+        },
+        animation: {
+          'pulse-bright': 'pulse-bright 1s infinite',
+        },
+      },
+    },
+  }
+</script>
+
+
+            </div>
+          </div>
+        </form>
+
+        <!-- Processing state -->
+        <div id="processing" class="hidden mt-8 rounded-2xl border border-white/10 bg-neutral-950/60 p-5">
+          <div class="flex items-center gap-3">
+            <div class="h-8 w-8 rounded-full border border-white/10 grid place-items-center">
+              <div class="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"></div>
+            </div>
+            <p class="text-sm text-neutral-300">Processing file, please wait…</p>
+          </div>
+
+          <div class="mt-4 h-3 w-full overflow-hidden rounded-full bg-white/5 ring-1 ring-inset ring-white/10">
+            <div id="progressFill" class="h-full w-0 rounded-full bg-gradient-to-r from-emerald-400 via-brand-400 to-sky-400 transition-all duration-1000"></div>
+          </div>
+
+          <div class="mt-4 rounded-xl border border-white/10 bg-black/40 p-3 font-mono text-xs text-neutral-300">
+            <div class="opacity-70">Initializing…</div>
+            <div class="opacity-70">Reading file…</div>
+            <div class="opacity-70">Updating attendance…</div>
+          </div>
+
+          <div id="completeMessage"
+  class="hidden mt-4 inline-flex items-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-emerald-200 animate-success">
+  <i class="fa-solid fa-check"></i>
+  <span>Process complete</span>
+</div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Tips -->
+    <section class="mt-8 grid gap-6 md:grid-cols-3">
+      <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-5">
+        <div class="mb-2 text-sm font-semibold text-neutral-200"><i class="fa-solid fa-bolt mr-2"></i>Fast</div>
+        <p class="text-sm text-neutral-400">Optimized parser handles large sheets with smart chunking and streaming writes.</p>
+      </div>
+      <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-5">
+  <div class="mb-2 text-sm font-semibold text-neutral-200">
+     <i class="fa-solid fa-circle-check mr-2"></i>Reliable
+  </div>
+  <p class="text-sm text-neutral-400">
+    Automatic validation and rollback on failure to keep data consistent.
+  </p>
+</div>
+      <div class="rounded-2xl border border-white/10 bg-neutral-900/40 p-5">
+        <div class="mb-2 text-sm font-semibold text-neutral-200"><i class="fa-solid fa-clipboard-check mr-2"></i>Audited</div>
+        <p class="text-sm text-neutral-400">All changes are tracked with user, time, and a brief summary.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-10">
+    <div class="mt-10 rounded-2xl border border-white/10 bg-neutral-900/40 p-5 text-center text-sm text-neutral-400">
+      Developed by <a href="https://github.com/kudaliyanagethanuja" target="_blank" class="text-neutral-200 hover:underline">
+  Thanuja Sathsara
+</a>
+ · Copyright © 2025–2026 · MIT License
+      <div class="mt-2 text-xs text-neutral-500">last update on 14 Aug 2025, at 20:40 (IST)</div>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const processing = document.getElementById('processing');
+    const progressFill = document.getElementById('progressFill');
+    const completeMessage = document.getElementById('completeMessage');
+    const fileInput = document.getElementById('fileInput');
+    const fileName = document.getElementById('fileName');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Show selected file name
+    fileInput.addEventListener('change', () => {
+      const name = fileInput.files?.[0]?.name;
+      if (name) {
+        fileName.textContent = name;
+        fileName.classList.remove('hidden');
+      } else {
+        fileName.classList.add('hidden');
+      }
+    });
+
+    form.addEventListener('submit', function () {
+      // Disable button + show spinner
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+      submitBtn.innerHTML = '<span class="inline-flex items-center gap-2"><span class="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"></span> Processing…</span>';
+
+      // Show processing container
+      processing.classList.remove('hidden');
+
+      // Start progress animation (~2 seconds total)
+      requestAnimationFrame(() => {
+        progressFill.style.width = '100%';
+      });
+
+      // After 2s, show complete
+      setTimeout(() => {
+        completeMessage.classList.remove('hidden');
+        // After 2 more seconds, reset UI (optional — comment out if you want to keep visible)
+        setTimeout(() => {
+          processing.classList.add('hidden');
+          completeMessage.classList.add('hidden');
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+          submitBtn.innerHTML = '<span class="relative"><span class="pointer-events-none inline-block"><i class="fa-solid fa-rocket-launch mr-2"></i>Upload & Process</span></span>';
+          progressFill.style.width = '0%';
+        }, 4000);
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
