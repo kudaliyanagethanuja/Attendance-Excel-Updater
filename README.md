@@ -100,7 +100,7 @@ This interface ensures that users can upload, process, and download cleaned atte
 - Formats check-in/check-out times.
 - Downloads a new file: updated_<yourfile>.xlsx.
 
-## ✅ Checking
+## ✅ Clear and Direct
 
 Here are the credentials to access the application:
 
