@@ -46,7 +46,17 @@ It’s built with **Flask**, **Pandas**, and **OpenPyXL**.
 
 ## 📸 Screenshots
 
-> Add these images to `.github/images/` before pushing.
+> Add these images to
+>`📌 Problem Overview
+
+Many organizations track attendance using Excel sheets, but the raw data often has issues like: 
+
+- Missing dates in the month.
+- Incorrect or inconsistent Day values.
+- Check-in and check-out times not formatted consistently (AM/PM confusion).
+- Multiple sheets per employee or department, making manual correction tedious.
+
+This leads to inaccurate reports, wasted time, and difficulty calculating attendance or hours worked.` before pushing.
 
 ![Input Excel](.github/images/excel_input.png)  
 *Original Excel file with missing dates / times*
