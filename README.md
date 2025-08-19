@@ -55,10 +55,9 @@ Many organizations track attendance using Excel sheets, but the raw data often h
 - Check-in and check-out times not formatted consistently (AM/PM confusion).
 - Multiple sheets per employee or department, making manual correction tedious.
 
-This leads to inaccurate reports, wasted time, and difficulty calculating attendance or hours worked.` before pushing.
 
 ![Input Excel](.github/images/excel_input.png)  
-*Original Excel file with missing dates / times*
+*This leads to inaccurate reports, wasted time, and difficulty calculating attendance or hours worked.` before pushing.*
 
 >`📌 Solution Overview
 
@@ -69,10 +68,8 @@ This Flask project solves the problem by:
 - Standardizing time values to HH:MM AM/PM.
 - Preserving any existing check-in/check-out data.
 
-Processing multiple sheets in one workbook and producing a clean, downloadable Excel file.
-
 ![Output Excel](.github/images/excel_output.png)  
-*Processed Excel with filled dates and formatted times*
+*Processing multiple sheets in one workbook and producing a clean, downloadable Excel file.*
 
 >`📌 Web UI Overview
 
@@ -85,19 +82,16 @@ The Flask Attendance File Processor & Converter web interface is designed for si
 - Information hints: Explains processing speed and possible delays for large files.
 - Feature highlights: Quick visual cues about the app’s advantages:
 
-- ⚡ Fast – Optimized parser for large sheets.
+  ⚡ Fast – Optimized parser for large sheets.
 
-- ✅ Reliable – Automatic validation and rollback on failure.
+  ✅ Reliable – Automatic validation and rollback on failure.
 
-- 📝 Audited – Tracks all changes with user, time, and brief summary.
-
-Screenshot:
-
-This interface ensures that users can upload, process, and download cleaned attendance files quickly and securely, even without technical knowledge.
+  📝 Audited – Tracks all changes with user, time, and brief summary.
 
 
 ![Web UI](.github/images/app_ui.png)  
-*Upload page*
+*Screenshot:*
+This interface ensures that users can upload, process, and download cleaned attendance files quickly and securely, even without technical knowledge.
 
 ---
 
