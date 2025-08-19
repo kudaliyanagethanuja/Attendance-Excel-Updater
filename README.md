@@ -78,7 +78,7 @@ This Flask project solves the problem by:
 The Flask Attendance File Processor & Converter web interface is designed for simplicity and clarity:
 
 - Clean and modern design with a dark theme for better readability.
-- - Upload section: Users can easily drag & drop or click to select their .xlsx attendance files.
+- Upload section: Users can easily drag & drop or click to select their .xlsx attendance files.
 - Upload & Process button: Starts the automatic validation and processing of the Excel file.
 - Security notice: Highlights that files are encrypted in transit and limited to 20MB.
 - Information hints: Explains processing speed and possible delays for large files.
@@ -100,7 +100,7 @@ This interface ensures that users can upload, process, and download cleaned atte
 - Formats check-in/check-out times.
 - Downloads a new file: updated_<yourfile>.xlsx.
 
-## ✅ Checking
+## ✅ Clear and Direct
 
 Here are the credentials to access the application:
 
@@ -110,6 +110,8 @@ Username: admin
 Password: 
    
 ```
+Contributing
+- If you found any bugs, potential improvements, or even new features, feel free to do the changes and make a Pull Request.
 
 
 
